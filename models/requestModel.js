@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const requestSchema = new mongoose.Schema({
     title: String,
     description: String,
@@ -13,6 +15,10 @@ const requestSchema = new mongoose.Schema({
     },
     requestedTo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "admin"
-    }
-})
+        ref: "User"
+    },
+});
+
+const Request=mongoose.model("Request",requestSchema)
+
+module.exports = Request
