@@ -1,24 +1,27 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const requestSchema = new mongoose.Schema({
     title: String,
     description: String,
-    status: String,
-    requestedOn: {
-        type: Date,
-        default: Date.now
+    status: {
+        type: String,
+        enum: ["PENDING", "APPROVED", "REJECTED"],
+        default: "PENDING"
     },
-    actionTakenOn: Date,
     requestedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "UserAccount"   // ← fixed
     },
     requestedTo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "UserAccount"   // ← fixed
     },
-});
+    requestedStart: Date,
+    requestedEnd: Date,
+    accessStart: Date,
+    accessEnd: Date,
+    actionTakenOn: Date
 
-const Request=mongoose.model("Request",requestSchema)
+}, { timestamps: true });
 
-module.exports = Request
+module.exports = mongoose.model("Request", requestSchema);
